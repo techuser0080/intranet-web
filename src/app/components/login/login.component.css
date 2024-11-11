@@ -1,0 +1,15 @@
+.body {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+    background-color: orange;
+}
+.login {
+    width: 100%;
+    max-width: 390px;
+    text-align: center;
+}
+mat-form-field {
+    width: 70%;
+}
