@@ -10,6 +10,12 @@
     max-width: 390px;
     text-align: center;
 }
-mat-form-field {
+.field-width {
     width: 70%;
+}
+.login-signin-button {
+    height: 50px;
+}
+.spinner {
+    margin: 0 auto;
 }
