@@ -1,9 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SharedModule } from '../../shared/shared.module';
 import { User } from '../../../interfaces/usuario';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { UserService } from '../../../services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { RouterLink } from '@angular/router';
 
 export interface PeriodicElement {
   name: string;
@@ -15,24 +20,49 @@ export interface PeriodicElement {
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [MatToolbarModule, SharedModule, MatTooltipModule],
+  imports: [MatToolbarModule, SharedModule, MatTooltipModule, MatSortModule, RouterLink],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
-export class UserComponent {
+export class UserComponent implements OnInit {
 
-  userList: User[] = [
-    {user: 'testuser@gmail.com', name: 'Test', lastName: 'User', age: '20'},
-    {user: 'testuser2@gmail.com', name: 'Test2', lastName: 'User2', age: '21'},
-    {user: 'testuser3@gmail.com', name: 'Test3', lastName: 'User3', age: '22'},
-    {user: 'testuser4@gmail.com', name: 'Test4', lastName: 'User4', age: '24'},
-  ];
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  userList: User[] = [];
   
-  displayedColumns: string[] = ['user', 'name', 'lastName', 'age', 'actions'];
-  dataSource = new MatTableDataSource(this.userList);
+  displayedColumns: string[] = ['user', 'name', 'lastName', 'age', 'genre' , 'actions'];
+  dataSource!: MatTableDataSource<any>;
+
+  constructor (private _userService: UserService, private _snackBar: MatSnackBar) {}
+
+  loadUsers() {
+    this.userList = this._userService.getUsers();
+    this.dataSource = new MatTableDataSource(this.userList);
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  deleteUser(index: number) {
+    this._userService.deleteUser(index);
+    this.loadUsers();
+
+    this._snackBar.open('El usuario fue eliminado con exito.', '', {
+      duration: 1500,
+      horizontalPosition: 'center',
+      verticalPosition: 'bottom'
+    })
   }
 }

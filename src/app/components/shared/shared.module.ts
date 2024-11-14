@@ -11,6 +11,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [],
@@ -24,7 +26,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCardModule,
+    MatSelectModule
   ],
   exports: [
     CommonModule,
@@ -36,7 +40,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCardModule,
+    MatSelectModule
   ]
 })
 export class SharedModule { }
