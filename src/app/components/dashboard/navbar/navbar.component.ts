@@ -3,8 +3,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { SharedModule } from '../../shared/shared.module';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { MenuService } from '../../../services/menu.service';
 import { Menu } from '../../../interfaces/menu';
+import { MenuService } from './services/menu.service';
 
 @Component({
   selector: 'app-navbar',

@@ -4,9 +4,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../../../interfaces/usuario';
-import { UserService } from '../../../../services/user.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-register',
