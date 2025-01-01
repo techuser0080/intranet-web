@@ -22,7 +22,7 @@ export class FolderComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  folderList: Folder[] = [];
+  folderList: any[] = [];
   
   displayedColumns: string[] = ['user', 'name', 'lastName', 'age', 'genre' , 'actions'];
   dataSource!: MatTableDataSource<any>;
@@ -30,6 +30,14 @@ export class FolderComponent {
   constructor (private _folderService: FolderService, private _snackBar: MatSnackBar) {}
 
   loadUsers() {
+    this._folderService.getFoldersByCompanyId(1).subscribe({
+      next: (data: any) => {
+        this.folderList = data
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
     this.dataSource = new MatTableDataSource(this.folderList);
   }
 
