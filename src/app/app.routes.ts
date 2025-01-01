@@ -3,7 +3,9 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MainComponent } from './components/dashboard/main/main.component';
 import { UserComponent } from './components/dashboard/user/user.component';
-import { RegisterComponent } from './components/dashboard/user/register/register.component';
+import { RegisterUserComponent } from './components/dashboard/user/register/register.component';
+import { FolderComponent } from './components/dashboard/folder/folder.component';
+import { RegisterFolderComponent } from './components/dashboard/folder/register/register.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -11,7 +13,9 @@ export const routes: Routes = [
     { path: 'dashboard', component: DashboardComponent, children: [
         { path: '', component: MainComponent },
         { path: 'users', component: UserComponent },
-        { path: 'userRegister', component: RegisterComponent }
+        { path: 'userRegister', component: RegisterUserComponent },
+        { path: 'folder', component: FolderComponent },
+        { path: 'folderRegister', component: RegisterFolderComponent}
     ]},
     { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];

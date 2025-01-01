@@ -9,13 +9,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../services/user.service';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-user-register',
   standalone: true,
   imports: [SharedModule, MatToolbarModule, MatGridListModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent {
+export class RegisterUserComponent {
   gender: any[] = ['Masculino', 'Femenino'];
   form: FormGroup;
 

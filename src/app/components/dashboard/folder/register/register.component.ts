@@ -8,13 +8,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-folder-register',
   standalone: true,
   imports: [SharedModule, MatToolbarModule, MatTooltipModule, MatSortModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent {
+export class RegisterFolderComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
