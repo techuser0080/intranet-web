@@ -21,7 +21,8 @@ export class RegisterUserComponent {
 
   constructor(private fb: FormBuilder, private _userService: UserService, private router: Router, private _snackBar: MatSnackBar) {
     this.form = fb.group({
-      user: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
       name: ['', Validators.required],
       lastName: ['', Validators.required],
       gender: ['', Validators.required],
@@ -30,21 +31,28 @@ export class RegisterUserComponent {
   }
 
   userRegister() {
-    const user: User = {
-      user: this.form.value.user,
-      name: this.form.value.name,
-      lastName: this.form.value.lastName,
-      genre: this.form.value.gender,
-      age: this.form.value.age
+    const user = {
+      'name': this.form.value.name,
+      'lastName': this.form.value.lastName,
+      'email': this.form.value.email,
+      'password': this.form.value.password,
+      'age': this.form.value.age,
+      'gender': this.form.value.gender
     }
+    this._userService.addUser(user).subscribe({
+      next: (data: any) => {
 
-    this._userService.addUser(user);
-    this.router.navigate(['/dashboard/users']);
-    this._snackBar.open('El usuario fue registrado exitosamente.', '', {
-      duration: 1500,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
-    });
+        this._snackBar.open('El usuario fue registrado con exito.', '', {
+          duration: 1500,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        })
+        this.router.navigate(['dashboard/users'])
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
   }
 
 

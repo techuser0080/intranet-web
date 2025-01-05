@@ -29,7 +29,7 @@ export class UserComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  userList: User[] = [];
+  userList: any[] = [];
   
   displayedColumns: string[] = ['user', 'name', 'lastName', 'age', 'genre' , 'actions'];
   dataSource!: MatTableDataSource<any>;
@@ -37,8 +37,16 @@ export class UserComponent implements OnInit {
   constructor (private _userService: UserService, private _snackBar: MatSnackBar) {}
 
   loadUsers() {
-    this.userList = this._userService.getUsers();
-    this.dataSource = new MatTableDataSource(this.userList);
+    console.log('entro')
+    this._userService.getUsers().subscribe({
+      next: (data: any) => {
+        this.userList = data.data
+        this.dataSource = new MatTableDataSource(this.userList);
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
   }
 
   applyFilter(event: Event) {

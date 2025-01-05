@@ -9,6 +9,8 @@ import { MatProgressSpinnerModule, ProgressSpinnerMode } from '@angular/material
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { SharedModule } from '../shared/shared.module';
 import { Router } from '@angular/router';
+import { LoginService } from './services/login.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -26,9 +28,9 @@ export class LoginComponent {
   mode: ProgressSpinnerMode = 'determinate';
   value = 0;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private _loginService : LoginService, private fb: FormBuilder, private router: Router, private _cookieService: CookieService) {
     this.form = this.fb.group({
-      user: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     })
   }
@@ -39,16 +41,19 @@ export class LoginComponent {
   }
 
   login() {
-    console.log(this.form)
-    const user = this.form.value.user
-    const password = this.form.value.password
-
-    if (user == 'abc' && password == 'abc') {
-      this.fakeLogin();
-    } else {
-      this.errorLogin();
-      this.form.reset();
+    const user = {
+      'email': this.form.value.email,
+      'password': this.form.value.password
     }
+    this._loginService.login(user).subscribe({
+      next: (data: any) => {
+        this._cookieService.set('access_token', data.data.token)
+        this.router.navigate(['dashboard'])
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
   }
 
   errorLogin() {

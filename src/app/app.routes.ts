@@ -14,7 +14,7 @@ export const routes: Routes = [
         { path: '', component: MainComponent },
         { path: 'users', component: UserComponent },
         { path: 'userRegister', component: RegisterUserComponent },
-        { path: 'folder', component: FolderComponent },
+        { path: 'folders', component: FolderComponent },
         { path: 'folderRegister', component: RegisterFolderComponent}
     ]},
     { path: '**', redirectTo: 'login', pathMatch: 'full' }

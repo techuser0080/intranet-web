@@ -15,8 +15,12 @@ export class FolderService {
   constructor(private _cookieService: CookieService) { }
 
   getFoldersByCompanyId(companyId: number) {
-    return this.httpClient.get('https://localhost:4001', { headers: {
-      'Authorization': this._cookieService.get('access_token')
+    const token = this._cookieService.get('access_token')
+    console.log('entro token')
+    console.log(token)
+    console.log(this._cookieService.get('user'))
+    return this.httpClient.get('http://localhost:4000/api/folder/company/1', { headers: {
+      'Authorization': 'Bearer ' + token
     }})
   }
   

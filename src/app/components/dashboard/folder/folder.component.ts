@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -17,28 +17,29 @@ import { FolderService } from './services/folder.service';
   templateUrl: './folder.component.html',
   styleUrl: './folder.component.css'
 })
-export class FolderComponent {
+export class FolderComponent implements OnInit{
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   folderList: any[] = [];
   
-  displayedColumns: string[] = ['user', 'name', 'lastName', 'age', 'genre' , 'actions'];
+  displayedColumns: string[] = ['id', 'description', 'actions'];
   dataSource!: MatTableDataSource<any>;
 
   constructor (private _folderService: FolderService, private _snackBar: MatSnackBar) {}
 
-  loadUsers() {
+  loadFolders() {
+    console.log('entro')
     this._folderService.getFoldersByCompanyId(1).subscribe({
       next: (data: any) => {
-        this.folderList = data
+        this.folderList = data.data
+        this.dataSource = new MatTableDataSource(this.folderList);
       },
       error: (err) => {
         console.log(err)
       }
     })
-    this.dataSource = new MatTableDataSource(this.folderList);
   }
 
   applyFilter(event: Event) {
@@ -52,6 +53,6 @@ export class FolderComponent {
   }
 
   ngOnInit(): void {
-    this.loadUsers();
+    this.loadFolders();
   }
 }
