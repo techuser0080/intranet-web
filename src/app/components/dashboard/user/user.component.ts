@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { UserService } from './services/user.service';
 
 export interface PeriodicElement {
@@ -34,7 +34,7 @@ export class UserComponent implements OnInit {
   displayedColumns: string[] = ['user', 'name', 'lastName', 'age', 'genre' , 'actions'];
   dataSource!: MatTableDataSource<any>;
 
-  constructor (private _userService: UserService, private _snackBar: MatSnackBar) {}
+  constructor (private _userService: UserService, private _snackBar: MatSnackBar, private router: Router) {}
 
   loadUsers() {
     console.log('entro')
@@ -63,14 +63,20 @@ export class UserComponent implements OnInit {
     this.loadUsers();
   }
 
-  deleteUser(index: number) {
-    this._userService.deleteUser(index);
-    this.loadUsers();
-
-    this._snackBar.open('El usuario fue eliminado con exito.', '', {
-      duration: 1500,
-      horizontalPosition: 'center',
-      verticalPosition: 'bottom'
+  deleteUser(userId: number) {
+    this._userService.deleteUser(userId).subscribe({
+      next: (data: any) => {
+        this.loadUsers();
+        this._snackBar.open('El usuario fue eliminado con exito.', '', {
+          duration: 1500,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom'
+        })
+      },
+      error: (err) => {
+        console.log(err)
+      }
     })
+
   }
 }

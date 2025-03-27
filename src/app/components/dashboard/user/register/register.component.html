@@ -6,35 +6,32 @@
         <mat-card-content>
             <form [formGroup]="form" (ngSubmit)="userRegister()">
                 <mat-grid-list cols="4" rowHeight="70px">
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-grid-tile [colspan]="4" [rowspan]="1">
                         <mat-form-field class="user-field-width">
                             <mat-label>Usuario</mat-label>
                             <input matInput autocomplete="off" formControlName="email">
                         </mat-form-field>
                     </mat-grid-tile>
-                    <mat-grid-tile [colspan]="3" [rowspan]="6">
-                        Imagen
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-grid-tile [colspan]="4" [rowspan]="1">
                         <mat-form-field class="user-field-width">
                             <mat-label>Nombre</mat-label>
                             <input matInput autocomplete="off" formControlName="name">
                         </mat-form-field>
                     </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-grid-tile [colspan]="4" [rowspan]="1">
                         <mat-form-field class="user-field-width">
                             <mat-label>Apellido</mat-label>
                             <input matInput autocomplete="off" formControlName="lastName">
                         </mat-form-field>
                     </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-grid-tile [colspan]="4" [rowspan]="1" *ngIf="isUpdateUser ? false : true">
                         <mat-form-field class="user-field-width">
                             <mat-label>Contraseña</mat-label>
                             <input matInput autocomplete="off" formControlName="password">
                         </mat-form-field>
                     </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-form-field>
+                    <mat-grid-tile [colspan]="4" [rowspan]="1">
+                        <mat-form-field class="user-field-width">
                             <mat-label>Genero</mat-label>
                             <mat-select formControlName="gender">
                               @for (g of gender; track g) {
@@ -43,17 +40,35 @@
                             </mat-select>
                           </mat-form-field>
                     </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-grid-tile [colspan]="4" [rowspan]="1">
                         <mat-form-field class="user-field-width">
                             <mat-label>Edad</mat-label>
                             <input matInput autocomplete="off" formControlName="age">
                         </mat-form-field>
                     </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <button type="submit" [disabled]="form.invalid" mat-raised-button color="primary">Aceptar</button>
-                        <button mat-raised-button>Cancelar</button>
+                    <mat-grid-tile [colspan]="4" [rowspan]="1" *ngIf="isUpdateUser ? false : true">
+                        <mat-form-field [hidden]="isUpdateUser" class="user-field-width">
+                            <mat-label>Empresa</mat-label>
+                            <mat-select [(value)]="textSelectCompany" (selectionChange)="loadRolesByCompanyId(textSelectCompany)">
+                              @for (c of companies; track c) {
+                                <mat-option [value]="c.companyId">{{c.description}}</mat-option>
+                              }
+                            </mat-select>
+                          </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="4" [rowspan]="1" *ngIf="isUpdateUser ? false : true">
+                        <mat-form-field [hidden]="isUpdateUser" class="user-field-width">
+                          <mat-label>Rol</mat-label>
+                          <mat-select [(value)]="textSelectRole">
+                            @for (r of roles; track r) {
+                              <mat-option [value]="r.rolId">{{r.description}}</mat-option>
+                            }
+                          </mat-select>
+                        </mat-form-field>
                     </mat-grid-tile>
                 </mat-grid-list>
+                <button type="submit" [disabled]="form.invalid" mat-raised-button color="primary">Confirmar</button>
+                <button type="button" (click)="ngCancel()" mat-raised-button>Cancelar</button>
             </form>
         </mat-card-content>
     </mat-card>

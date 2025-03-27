@@ -48,6 +48,8 @@ export class LoginComponent {
     this._loginService.login(user).subscribe({
       next: (data: any) => {
         this._cookieService.set('access_token', data.data.token)
+        this._cookieService.set('userId', data.data.userId)
+        this._cookieService.set('rol', data.data.rol)
         this.router.navigate(['dashboard'])
       },
       error: (err) => {

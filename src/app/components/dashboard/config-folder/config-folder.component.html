@@ -1,1 +1,52 @@
-<p>config-folder works!</p>
+<div class="container">
+    <mat-toolbar>
+        <span>Config Folder</span>
+        <div class="example-spacer"></div>
+        <button mat-raised-button color="primary" [routerLink]="['/dashboard/configFolderRegister', { textSelectCompany: textSelectCompany }]">Agregar Config Folder</button>
+    </mat-toolbar>
+
+    <div *ngIf="configFolderList.length > 0">
+      <mat-form-field>
+        <mat-label>Empresa</mat-label>
+        <mat-select [(value)]="textSelectCompany">
+          @for (c of companies; track c) {
+            <mat-option (onSelectionChange)="loadConfigFolders(c.companyId)" [value]="c.companyId">{{c.description}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+        
+          <!-- Position Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header=""> Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.folderConfigId}} </td>
+          </ng-container>
+        
+          <!-- Name Column -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Descripción </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element; let i = index" style="text-align: right;">
+                  <a class="pointer" [routerLink]="['/dashboard/prompts', { textSelectCompany: textSelectCompany, textSelectFolderConfig: element.folderConfigId }]" style="color: green;" matTooltip="Prompt">
+                      <mat-icon>list_alt</mat-icon>
+                  </a>
+              </td>
+            </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of folders"></mat-paginator>
+      </div>
+    </div>
+    <h2 *ngIf="configFolderList.length === 0">No hay registros para mostrar</h2>
+</div>

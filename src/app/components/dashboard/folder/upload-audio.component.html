@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Subir Audios</h2>
+<mat-dialog-content>
+    <div>
+        <input (change)="changeSelectedFile($event)" type="file" multiple>
+        <br/>
+        <button [disabled]="isUploading" (click)="ngUploadAudios()" mat-raised-button color="primary">Subir Audios</button>
+    </div>
+</mat-dialog-content>

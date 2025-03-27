@@ -4,10 +4,6 @@
         "redirect": "/dashboard"
     },
     {
-        "name": "Usuario",
-        "redirect": "/dashboard/users"
-    },
-    {
         "name": "Folder",
         "redirect": "/dashboard/folders"
     },

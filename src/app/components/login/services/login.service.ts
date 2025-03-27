@@ -6,11 +6,13 @@ import { inject, Injectable } from '@angular/core';
 })
 export class LoginService {
 
+  apiUrl: string = 'https://securityapp-ewhwevayd3g9cdgk.eastus2-01.azurewebsites.net'
+
   httpClient = inject(HttpClient)
 
   constructor() { }
 
   login(data: any) {
-    return this.httpClient.post('http://localhost:4001/api/user/login', data)
+    return this.httpClient.post(this.apiUrl + '/api/user/login', data)
   }
 }

@@ -8,7 +8,7 @@ import { CookieService } from 'ngx-cookie-service'
 })
 export class FolderService {
 
-  folderList: Folder[] = []
+  apiUrl: string = 'https://administration-effzardpfsaed0gw.eastus2-01.azurewebsites.net'
 
   httpClient = inject(HttpClient)
 
@@ -16,15 +16,50 @@ export class FolderService {
 
   getFoldersByCompanyId(companyId: number) {
     const token = this._cookieService.get('access_token')
-    console.log('entro token')
-    console.log(token)
-    console.log(this._cookieService.get('user'))
-    return this.httpClient.get('http://localhost:4000/api/folder/company/1', { headers: {
+    return this.httpClient.get(this.apiUrl + '/api/folder/company/' + companyId, { headers: {
       'Authorization': 'Bearer ' + token
     }})
   }
-  
-  addFolder(folder: Folder) {
-    this.folderList.unshift(folder);
+
+  getCompaniesByUserId(userId: any) {
+    const token = this._cookieService.get('access_token')
+    return this.httpClient.get(this.apiUrl + '/api/user/' + userId + '/companies', { headers: {
+      'Authorization': 'Bearer ' + token
+    }})
+  }
+
+  deleteFolder(folderId: number) {
+    const token = this._cookieService.get('access_token')
+    return this.httpClient.delete(this.apiUrl + '/api/folder/' + folderId, { headers: {
+      'Authorization': 'Bearer ' + token
+    }})
+  }
+
+  updateFolder(folder: any, folderId: any) {
+    const token = this._cookieService.get('access_token')
+    return this.httpClient.put(this.apiUrl + '/api/folder/' + folderId, folder, { headers: {
+      'Authorization': 'Bearer ' + token
+    }})
+  }
+
+  addFolder(folder: any) {
+    const token = this._cookieService.get('access_token')
+    return this.httpClient.post(this.apiUrl + '/api/folder', folder, { headers: {
+      'Authorization': 'Bearer ' + token
+    }})
+  }
+
+  uploadAudiosToFolder(folderId: any, audios: FileList) {
+    const token = this._cookieService.get('access_token')
+    const userId = this._cookieService.get('userId')
+    const formData = new FormData()
+    formData.append("creationUserId", userId)
+    for (let i = 0; i < audios.length; i++) {
+      formData.append("files", audios[i])
+    }
+    console.log(formData)
+    return this.httpClient.post(this.apiUrl + '/api/folder/' + folderId + '/uploadAudios', formData, { headers: {
+      'Authorization': 'Bearer ' + token
+    }})
   }
 }

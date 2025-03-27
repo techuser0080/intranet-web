@@ -1,1 +1,46 @@
-<p>report works!</p>
+<div class="container">
+    <mat-toolbar>
+        <span>Reporte de Respuesta de Audios</span>
+    </mat-toolbar>
+    <mat-card style="margin-top: 10px;" appearance="outlined">
+        <mat-card-content>
+            <form [formGroup]="form" (ngSubmit)="downloadAudioResponse()">
+                <mat-grid-list cols="4" rowHeight="70px">
+                    <mat-grid-tile [colspan]="4" [rowspan]="1">
+                        <mat-form-field style="width: 100%;">
+                            <mat-label>Empresa</mat-label>
+                            <mat-select [(value)]="company" formControlName="company">
+                              @for (c of companies; track c) {
+                                <mat-option (onSelectionChange)="loadConfigFoldersByCompanyId(c.companyId)" [value]="c.companyId">{{c.description}}</mat-option>
+                              }
+                            </mat-select>
+                          </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="4" [rowspan]="1">
+                        <mat-form-field style="width: 100%;">
+                            <mat-label>Config Folder</mat-label>
+                            <mat-select [(value)]="folderConfig" formControlName="folderConfig">
+                              @for (fc of folderConfigList; track fc) {
+                                <mat-option (onSelectionChange)="loadFoldersByFolderConfigId(fc.folderConfigId)" [value]="fc.folderConfigId">{{fc.description}}</mat-option>
+                              }
+                            </mat-select>
+                          </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="4" [rowspan]="1">
+                        <mat-form-field style="width: 100%;">
+                            <mat-label>Folder</mat-label>
+                            <mat-select [(value)]="folder" formControlName="folder">
+                              @for (f of folderList; track f) {
+                                <mat-option [value]="f.folderId">{{f.description}}</mat-option>
+                              }
+                            </mat-select>
+                          </mat-form-field>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="4" [rowspan]="1">
+                        <button type="submit" [disabled]="form.invalid" mat-raised-button color="primary">Descargar</button>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </form>
+        </mat-card-content>
+    </mat-card>
+  </div>

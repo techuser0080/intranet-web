@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { Menu } from '../../../interfaces/menu';
 import { MenuService } from './services/menu.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,11 +17,12 @@ import { MenuService } from './services/menu.service';
 export class NavbarComponent implements OnInit {
   menu: Menu[] = [];
 
-  constructor(private _menuService: MenuService) {}
+  constructor(private _menuService: MenuService, private _cookieService: CookieService) {}
 
   loadMenu() {
-    this._menuService.getMenu().subscribe(data => {
-      console.log(data);
+    const rol = this._cookieService.get('rol')
+    const route = (rol == 'Administrador') ? './assets/menu.json' : './assets/menu-operator.json'
+    this._menuService.getMenu(route).subscribe(data => {
       this.menu = data;
     })
   }
