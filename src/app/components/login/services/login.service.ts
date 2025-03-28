@@ -13,6 +13,6 @@ export class LoginService {
   constructor() { }
 
   login(data: any) {
-    return this.httpClient.post(this.apiUrl + '/api/user/login', data)
+    return this.httpClient.post(this.apiUrl + '/api/user/login', data, { withCredentials: true })
   }
 }
