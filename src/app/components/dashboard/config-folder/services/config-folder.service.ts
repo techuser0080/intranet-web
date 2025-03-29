@@ -8,6 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class ConfigFolderService {
 
   apiUrl: string = 'https://administration-effzardpfsaed0gw.eastus2-01.azurewebsites.net'
+  apiSecurityUrl: string = 'https://securityapp-ewhwevayd3g9cdgk.eastus2-01.azurewebsites.net'
 
   httpClient = inject(HttpClient)
 
@@ -22,7 +23,7 @@ export class ConfigFolderService {
 
   getCompaniesByUserId(userId: any) {
     const token = this._cookieService.get('access_token')
-    return this.httpClient.get(this.apiUrl + '/api/user/' + userId + '/companies', { headers: {
+    return this.httpClient.get(this.apiSecurityUrl + '/api/user/' + userId + '/companies', { headers: {
       'Authorization': 'Bearer ' + token
     }, withCredentials: true })
   }
